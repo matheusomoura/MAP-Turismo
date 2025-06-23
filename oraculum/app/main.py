@@ -1,19 +1,22 @@
-import torch
 import streamlit as st
-from views import upload_page, chat_page, faiss_page, qa_page
-from faiss_db import init_faiss_index
 
-torch.classes.__path__ = []  # add this line to manually set it to empty.
-
-# Configuração inicial
+# ✅ Deve ser o primeiro comando do script
 st.set_page_config(
     page_title="MAP Turismo",
     page_icon="🌎",
     layout="wide"
 )
 
+import torch
+from views import upload_page, chat_page, faiss_page, qa_page
+from faiss_db import init_faiss_index
+
+# Corrige possível erro com Torch em contêineres minimalistas
+torch.classes.__path__ = []
+
 def main():
     init_faiss_index()
+
     st.sidebar.title("Menu Principal")
     page = st.sidebar.radio("Navegação:",
                             ["💬 Chat com RAG", "📤 Upload e Processamento", "🧠 Gerador QA", "📂 FAISS Manager"])
